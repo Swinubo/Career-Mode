@@ -16,6 +16,7 @@ age = 9
 clock, FPS = pygame.time.Clock(), 60
 done = False
 team = [pygame.font.SysFont('Comic Sans M',  40).render('None', True, White), 'FILLER BECAUSE THE PARAMETER "team" is refered to as a list']
+CurrentStage = '16'
 
 #Define functions
 def DisplScrn():
@@ -169,7 +170,16 @@ def UCL():
                     match_sim(1, bracket)
                 elif ((x < X) and (x > X-300) and (y < Y/2+140) and (y > Y/2+100)):
                     TTS.talk('Simulate both legs')
-                    out_of_ucl = match_sim(2, bracket)
+                    
+                    if CurrentStage == '16':
+                        out_of_ucl = match_sim(2, bracket)
+                    elif CurrentStage == '8':
+                        out_of_ucl = Quarters(bracket)
+                    elif CurrentStage == '4':
+                        print('CODE FOR THE SEMIFINALS WILL GO HERE')
+                    elif CurrentStage == '2':
+                        print('CODE FOR THE FINAL WILL GO HERE')
+
                 elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
                     TTS.talk('Simulate all')
         clock.tick(FPS)
@@ -216,12 +226,11 @@ def match_sim(legs, bracket):
             TTS.talk("It's a draw! Penalties!")
         else:
             TTS.talk('You lost on aggragate!')
-            bracket[0] = b[0]
             return True
 
     bracket = sim_all_other_matches(legs, bracket)
     time.sleep(7.5)
-    Quarters(bracket)
+    CurrentStage = '8'
     return False
 
 def sim_all_other_matches(legs, bracket):
