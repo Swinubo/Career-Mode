@@ -16,7 +16,6 @@ age = 9
 clock, FPS = pygame.time.Clock(), 60
 done = False
 team = [pygame.font.SysFont('Comic Sans M',  40).render('None', True, White), 'FILLER BECAUSE THE PARAMETER "team" is refered to as a list']
-CurrentStage = '16'
 
 #Define functions
 def DisplScrn():
@@ -127,6 +126,7 @@ def Minigame1():
         quit()
 
 def UCL():
+    CurrentStage = '16'
     if age == 16:
         TTS.talk("Since you are now 16, your manager has decided to start you in this seasons' Uefa Champions League!")
 
@@ -172,9 +172,9 @@ def UCL():
                     TTS.talk('Simulate both legs')
                     
                     if CurrentStage == '16':
-                        out_of_ucl, CurrentStage = match_sim(2, bracket)
+                        out_of_ucl, CurrentStage, bracket = match_sim(2, bracket)
                     elif CurrentStage == '8':
-                        out_of_ucl = Quarters(bracket)
+                        out_of_ucl, CurrentStage, bracket = Quarters(2, bracket)
                     elif CurrentStage == '4':
                         print('CODE FOR THE SEMIFINALS WILL GO HERE')
                     elif CurrentStage == '2':
@@ -226,11 +226,37 @@ def match_sim(legs, bracket):
             TTS.talk("It's a draw! Penalties!")
         else:
             TTS.talk('You lost on aggragate!')
-            return True
+            return True, '16', ''
 
     bracket = sim_all_other_matches(legs, bracket)
     time.sleep(7.5)
-    return False, '8'
+
+    b1 = bracket[0]
+    t1, t2 = b1[0], b1[1]
+
+    b2 = bracket[1]
+    t3, t4 = b2[0], b2[1]
+
+    b3 = bracket[2]
+    t5, t6 = b3[0], b3[1]
+
+    b4 = bracket[3]
+    t7, t8 = b4[0], b4[1]
+
+    x = 0
+    y = 0
+    teams = [t1, t2, t3, t4, t5, t6, t7, t8]
+
+    DisplScrn()
+    UCL_buttons()
+
+    for t in teams:
+        scrn.blit(t[0], (x,y))
+        pygame.display.flip()
+        x += 90
+        time.sleep(1)
+
+    return False, '8', bracket
 
 def sim_all_other_matches(legs, bracket):
     print(len(bracket))
@@ -271,51 +297,44 @@ def arrow():
     pygame.draw.polygon(scrn, Red, ((1700, 0), (1700, 150), (1750, 75)))
     pygame.display.update()
 
-def Quarters(bracket):
-    b1 = bracket[0]
-    t1, t2 = b1[0], b1[1]
+def Quarters(legs, bracket):
+    y = 200
+    s1 = 0
+    s2 = 0
+    for num in range(legs):
+        c1 = random.randint(0,4)
+        c2 = random.randint(0,4) #PLAYER'S TEAM
+        s1 += c1 #s1 is used to record the two legs while c1 is only used to record one leg
+        s2 += c2
+        fixture = str(c1) + ' - ' + str(c2)
 
-    b2 = bracket[1]
-    t3, t4 = b2[0], b2[1]
+        b = bracket[0]    #bracket = all the teams (b1, b2, b3, b4, etc)
+                                #b = one singular bracket (Ex: b2)
 
-    b3 = bracket[2]
-    t5, t6 = b3[0], b3[1]
-
-    b4 = bracket[3]
-    t7, t8 = b4[0], b4[1]
-
-    x = 0
-    y = 0
-    teams = [t1, t2, t3, t4, t5, t6, t7, t8]
-
-    DisplScrn()
-    UCL_buttons()
-
-    for t in teams:
-        scrn.blit(t[0], (x,y))
+        if c2 > c1:
+            TTS.talk('You won!')
+        elif c2 == c1:
+            TTS.talk("It's a draw!")
+        else:
+            TTS.talk('You lost!')
+            
+        scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (0, y))
         pygame.display.flip()
-        x += 90
-        time.sleep(1)
-    out_of_ucl = False
-    while not out_of_ucl:
-        UCL_buttons()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = event.pos
-                if ((x < X) and (x > X-300) and (y < Y/2-60) and (y > Y/2-100)):
-                    TTS.talk('Play')
-                elif ((x < X) and (x > X-300) and (y < Y/2+40) and (y > Y/2)):
-                    TTS.talk('Simulate one leg')
-                    match_sim(1, bracket)
-                elif ((x < X) and (x > X-300) and (y < Y/2+140) and (y > Y/2+100)):
-                    TTS.talk('Sussy')
-                    out_of_ucl = match_sim(2, bracket)
-                elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
-                    TTS.talk('Simulate all')
-        clock.tick(FPS)
+        y += 100
+    
+    if legs == 2:
+        aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
+        scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(aggregate, True, White), (0, 400))
+        if s2 > s1:
+            TTS.talk('You won on aggragate!')
+            bracket[0] = b[1]
+        elif s2 == s1:
+            TTS.talk("It's a draw! Penalties!")
+        else:
+            TTS.talk('You lost on aggragate!')
+            return True, '16'
+    bracket = sim_all_other_matches(legs, bracket)
+    time.sleep(7.5)
     
 team = initSituation()
 age += 1
