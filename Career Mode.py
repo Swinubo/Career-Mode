@@ -243,6 +243,13 @@ def match_sim(legs, bracket):
     b4 = bracket[3]
     t7, t8 = b4[0], b4[1]
 
+    bracket.remove(bracket[4])
+    bracket.remove(bracket[5])
+    bracket.remove(bracket[6])
+
+    print(len(bracket))
+    print(bracket)
+
     x = 0
     y = 0
     teams = [t1, t2, t3, t4, t5, t6, t7, t8]
