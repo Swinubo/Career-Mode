@@ -172,7 +172,7 @@ def UCL():
                     TTS.talk('Simulate both legs')
                     
                     if CurrentStage == '16':
-                        out_of_ucl = match_sim(2, bracket)
+                        out_of_ucl, CurrentStage = match_sim(2, bracket)
                     elif CurrentStage == '8':
                         out_of_ucl = Quarters(bracket)
                     elif CurrentStage == '4':
@@ -230,8 +230,7 @@ def match_sim(legs, bracket):
 
     bracket = sim_all_other_matches(legs, bracket)
     time.sleep(7.5)
-    CurrentStage = '8'
-    return False
+    return False, '8'
 
 def sim_all_other_matches(legs, bracket):
     print(len(bracket))
