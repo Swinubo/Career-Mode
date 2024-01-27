@@ -65,10 +65,10 @@ Dortmund = [pygame.transform.scale(pygame.image.load(str(pathlib.Path(image_path
 Wolfsburg = [pygame.transform.scale(pygame.image.load(str(pathlib.Path(image_path, 'Bundesliga', "Wolfsburg.png"))).convert_alpha(), LOGO_IMAGE_SIZE),Green, White]
 
 #Club rank
-t1 = [Porto, Sporting, Lyon, Wolfsburg, Sevilla]
-t2 = [Sociedad, Marseille, Roma, Benfica]
-t3 = [Spurs, AthleticoMadrid, Napoli, Dortmund, Newcastle]
-t4 = [Chelsea, ManCity, ManUtd, Arsenal, PSG, RealMadrid, Barca, Munich, LFC, Inter, Milan, Juve]
+tier1 = [Porto, Sporting, Lyon, Wolfsburg, Sevilla]
+tier2 = [Sociedad, Marseille, Roma, Benfica]
+tier3 = [Spurs, AthleticoMadrid, Napoli, Dortmund, Newcastle]
+tier4 = [Chelsea, ManCity, ManUtd, Arsenal, PSG, RealMadrid, Barca, Munich, LFC, Inter, Milan, Juve]
 
 t = [Porto, Sporting, Lyon, Wolfsburg, Sevilla, Sociedad, Marseille, Roma, Benfica, Spurs, AthleticoMadrid, Napoli, Dortmund, Newcastle,  Chelsea, ManCity, ManUtd, Arsenal, PSG, RealMadrid, Barca, Munich, LFC, Inter, Milan, Juve]
 
