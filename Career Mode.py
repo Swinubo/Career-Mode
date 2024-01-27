@@ -244,11 +244,11 @@ def match_sim(legs, bracket):
     t7, t8 = b4[0], b4[1]
 
     bracket.remove(bracket[4])
-    bracket.remove(bracket[5])
-    bracket.remove(bracket[6])
+    bracket.remove(bracket[4])
+    bracket.remove(bracket[4])
+    bracket.remove(bracket[4])
 
     print(len(bracket))
-    print(bracket)
 
     x = 0
     y = 0
@@ -268,11 +268,12 @@ def match_sim(legs, bracket):
 def sim_all_other_matches(legs, bracket):
     print(len(bracket))
     x = 200
+    NUM = 0
     for NUM in range(len(bracket)):
         y = 200
         s1 = 0
         s2 = 0
-        b = bracket[NUM + 1]
+        b = bracket[NUM] #IF NEED BE ADD THE +1 AGAIN
         for num in range(legs):
             c1 = random.randint(0,4)
             c2 = random.randint(0,4)
@@ -282,9 +283,9 @@ def sim_all_other_matches(legs, bracket):
             aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
 
             if s2 > s1:
-                bracket[NUM + 1] = b[0]
+                bracket[NUM] = b[0] #IF NEED BE ADD THE +1 AGAIN
             else:
-                bracket[NUM + 1] = b[1]
+                bracket[NUM] = b[1] #IF NEED BE ADD THE +1 AGAIN
 
             scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (x, y))
             time.sleep(1)
