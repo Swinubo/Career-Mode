@@ -84,3 +84,9 @@ while True:
 # This comment block at the top is just something that i turned on and off to see if the JerseyMaker() function worked
 
 #Update: i moved jersey maker to the main file
+
+
+#b = a bracket
+#t = a team
+#c = a club
+#s = a score

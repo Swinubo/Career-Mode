@@ -63,7 +63,7 @@ def initSituation():
     centerbox('to join one of two academies.',(X/2, 200), 100)
     pygame.display.flip()
     TTS.talk('The scout gives you the option to join one of two academies.')
-    teams = random.choices(t1, k=2)
+    teams = random.choices(t, k=2)  #i changed it from t1 to t so all teams can scout instead of lowest rated teams
     team1 = teams[0]
     team2 = teams[1]
     POS_ON_X_CHOICE = 200
@@ -220,12 +220,12 @@ def match_sim(legs, bracket):
         aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
         scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(aggregate, True, White), (0, 400))
         if s2 > s1:
-            TTS.talk('You won on aggragate!')
+            TTS.talk('Team two on aggragate!')
             bracket[0] = b[1]
         elif s2 == s1:
             TTS.talk("It's a draw! Penalties!")
         else:
-            TTS.talk('You lost on aggragate!')
+            TTS.talk('Team one on aggragate!')
             return True, '16', ''
 
     bracket = sim_all_other_matches(legs, bracket)
