@@ -1,5 +1,6 @@
 import pygame, pyautogui, time, random, TTS, Pop
 from Clubs import * #Another file catalog so this main one doesnt feel too crowded
+from DisplStuff import *
 
 #SET UP FOR THE SCREEN
 os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"
@@ -24,15 +25,6 @@ def DisplScrn():
     msgbox('Club:', (X-200, 60), 40)
     scrn.blit(team[0], (X-100, 40))
     pygame.display.flip()
-
-def msgbox(text, pos, size):
-    msg = pygame.font.SysFont('Comic Sans M',  size).render(text, True, White)
-    scrn.blit(msg, pos)
-
-def centerbox(text, pos, size):
-    msg = pygame.font.SysFont('Comic Sans M',  size).render(text, True, White)
-    msgRect = msg.get_rect(center = pos)
-    scrn.blit(msg, msgRect)
 
 def JerseyMaker(team, x, y):
     #team[0] = logo
@@ -220,12 +212,12 @@ def match_sim(legs, bracket):
         aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
         scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(aggregate, True, White), (0, 400))
         if s2 > s1:
-            TTS.talk('Team two on aggragate!')
+            TTS.talk('You won on aggragate!')
             bracket[0] = b[1]
         elif s2 == s1:
             TTS.talk("It's a draw! Penalties!")
         else:
-            TTS.talk('Team one on aggragate!')
+            TTS.talk('You lost on aggragate!')
             return True, '16', ''
 
     bracket = sim_all_other_matches(legs, bracket)
@@ -299,11 +291,6 @@ def sim_all_other_matches(legs, bracket):
             bracket[2] = [bracket[4],bracket[5]]
             bracket[3] = [bracket[6],bracket[7]]
             return bracket
-
-def arrow():
-    pygame.draw.rect(scrn, Red, (1600, 50, 100, 50))
-    pygame.draw.polygon(scrn, Red, ((1700, 0), (1700, 150), (1750, 75)))
-    pygame.display.update()
 
 def Quarters(legs, bracket):
     y = 200
