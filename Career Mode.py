@@ -233,7 +233,7 @@ def match_sim(legs, bracket):
     t5, t6 = b3[0], b3[1]
 
     b4 = bracket[3]
-    t7, t8 = b4[0], b4[1]
+    t7, t8 = b4[0], b4[1][0]
 
     bracket.remove(bracket[4])
     bracket.remove(bracket[4])
@@ -245,11 +245,13 @@ def match_sim(legs, bracket):
     x = 0
     y = 0
     teams = [t1, t2, t3, t4, t5, t6, t7, t8]
+    print(t8)
 
     DisplScrn()
     UCL_buttons()
 
     for t in teams:
+        print(t[0])
         scrn.blit(t[0], (x,y))
         pygame.display.flip()
         x += 90
@@ -286,10 +288,11 @@ def sim_all_other_matches(legs, bracket):
         pygame.display.flip()
         x += 200
         if NUM == 6:
-            bracket[0] = [bracket[0],bracket[1]]
-            bracket[1] = [bracket[2],bracket[3]]
-            bracket[2] = [bracket[4],bracket[5]]
-            bracket[3] = [bracket[6],bracket[7]]
+            CONSTANTBRACKET = bracket
+            bracket[0] = [CONSTANTBRACKET[0],CONSTANTBRACKET[1]]
+            bracket[1] = [CONSTANTBRACKET[2],CONSTANTBRACKET[3]]
+            bracket[2] = [CONSTANTBRACKET[4],CONSTANTBRACKET[5]]
+            bracket[3] = [CONSTANTBRACKET[6],CONSTANTBRACKET[7]]
             return bracket
 
 def Quarters(legs, bracket):
