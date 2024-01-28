@@ -148,7 +148,7 @@ def UCL():
 
     out_of_ucl = False
     while not out_of_ucl:
-        UCL_buttons()
+        UCL_buttons(X, Y)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -175,13 +175,6 @@ def UCL():
                 elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
                     TTS.talk('Simulate all')
         clock.tick(FPS)
-
-def UCL_buttons(): #this is all good too
-    scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render('Play', True, White, Maroon), (X-300, Y/2-100))
-    scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render('Simulate one leg', True, White, Maroon), (X-300, Y/2))
-    scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render('Simulate both legs', True, White, Maroon), (X-300, Y/2+100))
-    scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render('Simulate all', True, White, Maroon), (X-300, Y/2+200))
-    pygame.display.flip()
 
 def match_sim(legs, bracket):
     y = 200
@@ -248,7 +241,7 @@ def match_sim(legs, bracket):
     print(t8)
 
     DisplScrn()
-    UCL_buttons()
+    UCL_buttons(X, Y)
 
     for t in teams:
         print(t[0])
@@ -330,7 +323,7 @@ def Quarters(legs, bracket):
             TTS.talk("It's a draw! Penalties!")
         else:
             TTS.talk('You lost on aggragate!')
-            return True, '16'
+            return True, '16', bracket
     bracket = sim_all_other_matches(legs, bracket)
     time.sleep(7.5)
     
