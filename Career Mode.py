@@ -238,13 +238,13 @@ def match_sim(legs, bracket):
     x = 0
     y = 0
     teams = [t1, t2, t3, t4, t5, t6, t7, t8]
-    print(t8)
+    print(teams)
 
     DisplScrn()
     UCL_buttons(X, Y)
 
     for t in teams:
-        print(t[0])
+        print(str(t))
         scrn.blit(t[0], (x,y))
         pygame.display.flip()
         x += 90
@@ -282,6 +282,8 @@ def sim_all_other_matches(legs, bracket):
         x += 200
         if NUM == 6:
             CONSTANTBRACKET = bracket
+            print("Hello:" + str(CONSTANTBRACKET[0]))
+            print("again:" + str(CONSTANTBRACKET[1]))
             bracket[0] = [CONSTANTBRACKET[0],CONSTANTBRACKET[1]]
             bracket[1] = [CONSTANTBRACKET[2],CONSTANTBRACKET[3]]
             bracket[2] = [CONSTANTBRACKET[4],CONSTANTBRACKET[5]]
@@ -323,10 +325,11 @@ def Quarters(legs, bracket):
             TTS.talk("It's a draw! Penalties!")
         else:
             TTS.talk('You lost on aggragate!')
-            return True, '16', bracket
+            return True, '16', 'bombbaclat'
     bracket = sim_all_other_matches(legs, bracket)
     time.sleep(7.5)
-    
+    return True, '4', 'bombbaclat'
+
 team = initSituation()
 age += 1
 #Minigame1() UNCOMMENT THIS AFTER DONE WITH TESTS
