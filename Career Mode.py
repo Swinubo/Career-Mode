@@ -207,6 +207,8 @@ def match_sim(legs, bracket):
         if s2 > s1:
             TTS.talk('You won on aggragate!')
             bracket[0] = b[1]
+            print("b[1]: " + str(b[1]))
+            print("bracket[0] (b4 sim all matches): " + str(bracket[0]))
         elif s2 == s1:
             TTS.talk("It's a draw! Penalties!")
         else:
@@ -233,18 +235,16 @@ def match_sim(legs, bracket):
     bracket.remove(bracket[4])
     bracket.remove(bracket[4])
 
-    print(len(bracket))
-
     x = 0
     y = 0
     teams = [t1, t2, t3, t4, t5, t6, t7, t8]
-    print(teams)
+    print("All the teams: " + str(teams))
 
     DisplScrn()
     UCL_buttons(X, Y)
 
     for t in teams:
-        print(str(t))
+        print("Team:" + str(t))
         scrn.blit(t[0], (x,y))
         pygame.display.flip()
         x += 90
@@ -253,14 +253,13 @@ def match_sim(legs, bracket):
     return False, '8', bracket
 
 def sim_all_other_matches(legs, bracket):
-    print(len(bracket))
     x = 200
     NUM = 0
-    for NUM in range(len(bracket)):
+    for NUM in range(len(bracket)-1):
         y = 200
         s1 = 0
         s2 = 0
-        b = bracket[NUM] #IF NEED BE ADD THE +1 AGAIN
+        b = bracket[NUM+1] #IF NEED BE ADD THE +1 AGAIN
         for num in range(legs):
             c1 = random.randint(0,4)
             c2 = random.randint(0,4)
@@ -270,9 +269,9 @@ def sim_all_other_matches(legs, bracket):
             aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
 
             if s2 > s1:
-                bracket[NUM] = b[0] #IF NEED BE ADD THE +1 AGAIN
+                bracket[NUM+1] = b[0] #IF NEED BE ADD THE +1 AGAIN
             else:
-                bracket[NUM] = b[1] #IF NEED BE ADD THE +1 AGAIN
+                bracket[NUM+1] = b[1] #IF NEED BE ADD THE +1 AGAIN
 
             scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (x, y))
             time.sleep(1)
@@ -281,9 +280,10 @@ def sim_all_other_matches(legs, bracket):
         pygame.display.flip()
         x += 200
         if NUM == 6:
+            print("TEAMS IN SIM ALL MATHES:" + str(bracket) )
             CONSTANTBRACKET = bracket
-            print("Hello:" + str(CONSTANTBRACKET[0]))
-            print("again:" + str(CONSTANTBRACKET[1]))
+            print("CONSTANTBRACKET[6]:" + str(CONSTANTBRACKET[6]))
+            print("CONSTANTBRACKET[7]:" + str(CONSTANTBRACKET[7]))
             bracket[0] = [CONSTANTBRACKET[0],CONSTANTBRACKET[1]]
             bracket[1] = [CONSTANTBRACKET[2],CONSTANTBRACKET[3]]
             bracket[2] = [CONSTANTBRACKET[4],CONSTANTBRACKET[5]]
