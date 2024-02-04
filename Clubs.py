@@ -74,6 +74,7 @@ t = [Porto, Sporting, Lyon, Wolfsburg, Sevilla, Sociedad, Marseille, Roma, Benfi
 
 #Other images
 Ball = pygame.transform.scale(pygame.image.load(str(pathlib.Path(image_path_g, "Ball.png"))).convert_alpha(), BALL_IMAGE_SIZE)
+Head = pygame.transform.scale(pygame.image.load(str(pathlib.Path(image_path_g, "Face.png"))).convert_alpha(), LOGO_IMAGE_SIZE)
 
 
 '''

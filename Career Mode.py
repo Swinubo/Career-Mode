@@ -39,6 +39,7 @@ def JerseyMaker(team, x, y):
     pygame.draw.rect(scrn, team[2], (pos[0], pos[1]+pos[3], 30, 50)) #left leg
     pygame.draw.rect(scrn, team[2], (pos[0]+50, pos[1]+pos[3], 30, 50)) #right leg
     scrn.blit(team[0], (pos[0]+pos[3]-200, pos[1]))
+    scrn.blit(Head, (pos[0], pos[1]-75))
     pygame.display.flip()
 
 def initSituation():
@@ -260,8 +261,6 @@ def sim_all_other_matches(legs, bracket):
         s1 = 0
         s2 = 0
         b = bracket[NUM+1]
-        if NUM == 8:
-            print("BREAKPOINT WILL GO HERE")
         for num in range(legs):
             c1 = random.randint(0,4)
             c2 = random.randint(0,4)
