@@ -228,7 +228,7 @@ def match_sim(legs, bracket):
     t5, t6 = b3[0], b3[1]
 
     b4 = bracket[3]
-    t7, t8 = b4[0], b4[1][0]
+    t7, t8 = b4[0], b4[1]
 
     bracket.remove(bracket[4])
     bracket.remove(bracket[4])
@@ -260,6 +260,8 @@ def sim_all_other_matches(legs, bracket):
         s1 = 0
         s2 = 0
         b = bracket[NUM+1] #IF NEED BE ADD THE +1 AGAIN
+        if NUM == 8:
+            print("BREAKPOINT WILL GO HERE")
         for num in range(legs):
             c1 = random.randint(0,4)
             c2 = random.randint(0,4)
@@ -271,7 +273,7 @@ def sim_all_other_matches(legs, bracket):
             if s2 > s1:
                 bracket[NUM+1] = b[0] #IF NEED BE ADD THE +1 AGAIN
             else:
-                bracket[NUM+1] = b[1] #IF NEED BE ADD THE +1 AGAIN
+                bracket[NUM+1] = b[1] #IF NsEED BE ADD THE +1 AGAIN
 
             scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (x, y))
             time.sleep(1)
@@ -288,6 +290,7 @@ def sim_all_other_matches(legs, bracket):
             bracket[1] = [CONSTANTBRACKET[2],CONSTANTBRACKET[3]]
             bracket[2] = [CONSTANTBRACKET[4],CONSTANTBRACKET[5]]
             bracket[3] = [CONSTANTBRACKET[6],CONSTANTBRACKET[7]]
+            print("bracket[3]: " + str(bracket[3]))
             return bracket
 
 def Quarters(legs, bracket):
