@@ -259,7 +259,7 @@ def sim_all_other_matches(legs, bracket):
         y = 200
         s1 = 0
         s2 = 0
-        b = bracket[NUM+1] #IF NEED BE ADD THE +1 AGAIN
+        b = bracket[NUM+1]
         if NUM == 8:
             print("BREAKPOINT WILL GO HERE")
         for num in range(legs):
@@ -271,9 +271,9 @@ def sim_all_other_matches(legs, bracket):
             aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
 
             if s2 > s1:
-                bracket[NUM+1] = b[0] #IF NEED BE ADD THE +1 AGAIN
+                bracket[NUM+1] = b[0]
             else:
-                bracket[NUM+1] = b[1] #IF NsEED BE ADD THE +1 AGAIN
+                bracket[NUM+1] = b[1]
 
             scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (x, y))
             time.sleep(1)
