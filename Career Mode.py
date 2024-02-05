@@ -167,11 +167,11 @@ def UCL():
                     if CurrentStage == '16':
                         out_of_ucl, CurrentStage, bracket = match_sim(2, bracket, CurrentStage)
                     elif CurrentStage == '8':
-                        out_of_ucl, CurrentStage, bracket = Quarters(2, bracket)
+                        out_of_ucl, CurrentStage, bracket = Quarters(2, bracket, CurrentStage)
                     elif CurrentStage == '4':
-                        print('CODE FOR THE SEMIFINALS WILL GO HERE')
+                        out_of_ucl, CurrentStage, bracket = Semis(2, bracket, CurrentStage)
                     elif CurrentStage == '2':
-                        print('CODE FOR THE FINAL WILL GO HERE')
+                        out_of_ucl, CurrentStage, bracket = final(2, bracket, CurrentStage)
 
                 elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
                     TTS.talk('Simulate all')
@@ -282,22 +282,22 @@ def sim_all_other_matches(legs, bracket, CurrentStage):
         x += 200
         if (NUM == 6) and (CurrentStage == '16'):
             CONSTANTBRACKET = bracket
-            bracket[0] = [CONSTANTBRACKET[0],CONSTANTBRACKET[1]]
+            bracket[0] = [CONSTANTBRACKET[1],CONSTANTBRACKET[0]]
             bracket[1] = [CONSTANTBRACKET[2],CONSTANTBRACKET[3]]
             bracket[2] = [CONSTANTBRACKET[4],CONSTANTBRACKET[5]]
             bracket[3] = [CONSTANTBRACKET[6],CONSTANTBRACKET[7]]
             return bracket
-        elif (NUM == 5) and (CurrentStage == '8'):   #DECIDE LATER THE NUMS THO
+        elif (NUM == 2) and (CurrentStage == '8'):   #DECIDE LATER THE NUMS THO
             CONSTANTBRACKET = bracket
-            bracket[0] = [CONSTANTBRACKET[0],CONSTANTBRACKET[1]]
+            bracket[0] = [CONSTANTBRACKET[1],CONSTANTBRACKET[0]]
             bracket[1] = [CONSTANTBRACKET[2],CONSTANTBRACKET[3]]
             return bracket
-        elif (NUM == 6) and (CurrentStage == '4'): #DECIDE LATER THE NUMS THO
+        elif (NUM == 0) and (CurrentStage == '4'): #DECIDE LATER THE NUMS THO
             CONSTANTBRACKET = bracket
-            bracket[0] = [CONSTANTBRACKET[0],CONSTANTBRACKET[1]]
+            bracket[0] = [CONSTANTBRACKET[1],CONSTANTBRACKET[0]]
             return bracket
 
-def Quarters(legs, bracket):
+def Quarters(legs, bracket, CurrentStage):
     y = 200
     s1 = 0
     s2 = 0
@@ -332,10 +332,134 @@ def Quarters(legs, bracket):
             TTS.talk("It's a draw! Penalties!")
         else:
             TTS.talk('You lost on aggragate!')
-            return True, '16', 'bombbaclat'
-    bracket = sim_all_other_matches(legs, bracket)
+            return True, '16', bracket
+    bracket = sim_all_other_matches(legs, bracket, CurrentStage)
     time.sleep(7.5)
-    return True, '4', 'bombbaclat'
+
+    b1 = bracket[0]
+    t1, t2 = b1[0], b1[1]
+
+    b2 = bracket[1]
+    t3, t4 = b2[0], b2[1]
+
+    bracket.remove(bracket[2])
+    bracket.remove(bracket[2])
+
+    x = 0
+    y = 0
+    teams = [t1, t2, t3, t4]
+    print("All the teams: " + str(teams))
+
+    DisplScrn()
+    UCL_buttons(X, Y)
+
+    for t in teams:
+        print("Team:" + str(t))
+        scrn.blit(t[0], (x,y))
+        pygame.display.flip()
+        x += 90
+        time.sleep(1)
+
+    return False, '4', bracket
+
+def Semis(legs, bracket, CurrentStage):
+    y = 200
+    s1 = 0
+    s2 = 0
+    for num in range(legs):
+        c1 = random.randint(0,4)
+        c2 = random.randint(0,4) #PLAYER'S TEAM
+        s1 += c1 #s1 is used to record the two legs while c1 is only used to record one leg
+        s2 += c2
+        fixture = str(c1) + ' - ' + str(c2)
+
+        b = bracket[0]    #bracket = all the teams (b1, b2, b3, b4, etc)
+                                #b = one singular bracket (Ex: b2)
+
+        if c2 > c1:
+            TTS.talk('You won!')
+        elif c2 == c1:
+            TTS.talk("It's a draw!")
+        else:
+            TTS.talk('You lost!')
+            
+        scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (0, y))
+        pygame.display.flip()
+        y += 100
+    
+    if legs == 2:
+        aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
+        scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(aggregate, True, White), (0, 400))
+        if s2 > s1:
+            TTS.talk('You won on aggragate!')
+            bracket[0] = b[1]
+        elif s2 == s1:
+            TTS.talk("It's a draw! Penalties!")
+        else:
+            TTS.talk('You lost on aggragate!')
+            return True, '16', bracket
+    bracket = sim_all_other_matches(legs, bracket, CurrentStage)
+    time.sleep(7.5)
+
+    b1 = bracket[0]
+    t1, t2 = b1[0], b1[1]
+
+    bracket.remove(bracket[1])
+
+    x = 0
+    y = 0
+    teams = [t1, t2]
+    print("All the teams: " + str(teams))
+
+    DisplScrn()
+    UCL_buttons(X, Y)
+
+    for t in teams:
+        print("Team:" + str(t))
+        scrn.blit(t[0], (x,y))
+        pygame.display.flip()
+        x += 90
+        time.sleep(1)
+
+    return False, '2', bracket
+
+def final(legs, bracket, CurrentStage):
+    y = 200
+    s1 = 0
+    s2 = 0
+    for num in range(legs):
+        c1 = random.randint(0,4)
+        c2 = random.randint(0,4) #PLAYER'S TEAM
+        s1 += c1 #s1 is used to record the two legs while c1 is only used to record one leg
+        s2 += c2
+        fixture = str(c1) + ' - ' + str(c2)
+
+        b = bracket[0]    #bracket = all the teams (b1, b2, b3, b4, etc)
+                                #b = one singular bracket (Ex: b2)
+
+        if c2 > c1:
+            TTS.talk('You won!')
+        elif c2 == c1:
+            TTS.talk("It's a draw!")
+        else:
+            TTS.talk('You lost!')
+            
+        scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (0, y))
+        pygame.display.flip()
+        y += 100
+    
+    if legs == 2:
+        aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
+        scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(aggregate, True, White), (0, 400))
+        if s2 > s1:
+            TTS.talk('You won on aggragate!')
+            TTS.talk('You won the Uefa Champions League!')
+        elif s2 == s1:
+            TTS.talk("It's a draw! Penalties!")
+        else:
+            TTS.talk('You lost on aggragate!')
+    
+    return True, '16', bracket
 
 team = initSituation()
 age += 1
