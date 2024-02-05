@@ -165,7 +165,7 @@ def UCL():
                     TTS.talk('Simulate both legs')
                     
                     if CurrentStage == '16':
-                        out_of_ucl, CurrentStage, bracket = match_sim(2, bracket)
+                        out_of_ucl, CurrentStage, bracket = match_sim(2, bracket, CurrentStage)
                     elif CurrentStage == '8':
                         out_of_ucl, CurrentStage, bracket = Quarters(2, bracket)
                     elif CurrentStage == '4':
@@ -177,7 +177,7 @@ def UCL():
                     TTS.talk('Simulate all')
         clock.tick(FPS)
 
-def match_sim(legs, bracket):
+def match_sim(legs, bracket, CurrentStage):
     y = 200
     s1 = 0
     s2 = 0
@@ -216,7 +216,7 @@ def match_sim(legs, bracket):
             TTS.talk('You lost on aggragate!')
             return True, '16', ''
 
-    bracket = sim_all_other_matches(legs, bracket)
+    bracket = sim_all_other_matches(legs, bracket, CurrentStage)
     time.sleep(7.5)
 
     b1 = bracket[0]
@@ -253,7 +253,7 @@ def match_sim(legs, bracket):
 
     return False, '8', bracket
 
-def sim_all_other_matches(legs, bracket):
+def sim_all_other_matches(legs, bracket, CurrentStage):
     x = 200
     NUM = 0
     for NUM in range(len(bracket)-1):
@@ -280,16 +280,21 @@ def sim_all_other_matches(legs, bracket):
         scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(aggregate, True, White), (x, 400))
         pygame.display.flip()
         x += 200
-        if NUM == 6:
-            print("TEAMS IN SIM ALL MATHES:" + str(bracket) )
+        if (NUM == 6) and (CurrentStage == '16'):
             CONSTANTBRACKET = bracket
-            print("CONSTANTBRACKET[6]:" + str(CONSTANTBRACKET[6]))
-            print("CONSTANTBRACKET[7]:" + str(CONSTANTBRACKET[7]))
             bracket[0] = [CONSTANTBRACKET[0],CONSTANTBRACKET[1]]
             bracket[1] = [CONSTANTBRACKET[2],CONSTANTBRACKET[3]]
             bracket[2] = [CONSTANTBRACKET[4],CONSTANTBRACKET[5]]
             bracket[3] = [CONSTANTBRACKET[6],CONSTANTBRACKET[7]]
-            print("bracket[3]: " + str(bracket[3]))
+            return bracket
+        elif (NUM == 5) and (CurrentStage == '8'):   #DECIDE LATER THE NUMS THO
+            CONSTANTBRACKET = bracket
+            bracket[0] = [CONSTANTBRACKET[0],CONSTANTBRACKET[1]]
+            bracket[1] = [CONSTANTBRACKET[2],CONSTANTBRACKET[3]]
+            return bracket
+        elif (NUM == 6) and (CurrentStage == '4'): #DECIDE LATER THE NUMS THO
+            CONSTANTBRACKET = bracket
+            bracket[0] = [CONSTANTBRACKET[0],CONSTANTBRACKET[1]]
             return bracket
 
 def Quarters(legs, bracket):
