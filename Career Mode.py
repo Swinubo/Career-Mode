@@ -142,7 +142,7 @@ def UCL():
         scrn.blit(c1[0], (x, 0))
         scrn.blit(c2[0], (x+90, 0))
         pygame.display.flip()
-        time.sleep(1)
+        time.sleep(0.25)
         x += 180
 
     #up to here it's all good
@@ -217,7 +217,7 @@ def match_sim(legs, bracket, CurrentStage):
             return True, '16', ''
 
     bracket = sim_all_other_matches(legs, bracket, CurrentStage)
-    time.sleep(7.5)
+    time.sleep(2)
 
     b1 = bracket[0]
     t1, t2 = b1[0], b1[1]
@@ -249,7 +249,7 @@ def match_sim(legs, bracket, CurrentStage):
         scrn.blit(t[0], (x,y))
         pygame.display.flip()
         x += 90
-        time.sleep(1)
+        time.sleep(0.1)
 
     return False, '8', bracket
 
@@ -275,7 +275,7 @@ def sim_all_other_matches(legs, bracket, CurrentStage):
                 bracket[NUM+1] = b[0]
 
             scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (x, y))
-            time.sleep(1)
+            time.sleep(0.1)
             y += 100
         scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(aggregate, True, White), (x, 400))
         pygame.display.flip()
@@ -334,7 +334,7 @@ def Quarters(legs, bracket, CurrentStage):
             TTS.talk('You lost on aggragate!')
             return True, '16', bracket
     bracket = sim_all_other_matches(legs, bracket, CurrentStage)
-    time.sleep(7.5)
+    time.sleep(2)
 
     b1 = bracket[0]
     t1, t2 = b1[0], b1[1]
@@ -358,7 +358,7 @@ def Quarters(legs, bracket, CurrentStage):
         scrn.blit(t[0], (x,y))
         pygame.display.flip()
         x += 90
-        time.sleep(1)
+        time.sleep(0.1)
 
     return False, '4', bracket
 
@@ -399,7 +399,7 @@ def Semis(legs, bracket, CurrentStage):
             TTS.talk('You lost on aggragate!')
             return True, '16', bracket
     bracket = sim_all_other_matches(legs, bracket, CurrentStage)
-    time.sleep(7.5)
+    time.sleep(2)
 
     b1 = bracket[0]
     t1, t2 = b1[0], b1[1]
@@ -419,7 +419,7 @@ def Semis(legs, bracket, CurrentStage):
         scrn.blit(t[0], (x,y))
         pygame.display.flip()
         x += 90
-        time.sleep(1)
+        time.sleep(0.1)
 
     return False, '2', bracket
 
