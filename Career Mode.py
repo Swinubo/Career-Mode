@@ -270,9 +270,9 @@ def sim_all_other_matches(legs, bracket, CurrentStage):
             aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
 
             if s2 > s1:
-                bracket[NUM+1] = b[0]
-            else:
                 bracket[NUM+1] = b[1]
+            else:
+                bracket[NUM+1] = b[0]
 
             scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (x, y))
             time.sleep(1)
