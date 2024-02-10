@@ -25,6 +25,7 @@ def DisplScrn():
     msgbox('Age: ' + str(age), (X-100, 10), 40)
     msgbox('Club:', (X-200, 60), 40)
     msgbox('Trophies: ' + str(trophies), (X-300, 10), 40)
+    scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render('Transfer history', True, White, Maroon), (X-300, 125))
     scrn.blit(team[0], (X-100, 40))
     pygame.display.flip()
 
