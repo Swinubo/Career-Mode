@@ -25,3 +25,7 @@ def UCL_buttons(X, Y): #this is all good too
     scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render('Simulate both legs', True, White, Maroon), (X-300, Y/2+100))
     scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render('Simulate all', True, White, Maroon), (X-300, Y/2+200))
     pygame.display.flip()
+
+def transfer_button(X, Y):
+    scrn.blit(pygame.font.SysFont('Comic Sans M',  300).render('Simulate one leg', True, White, Maroon), (X-10, Y-300))
+    pygame.display.flip()

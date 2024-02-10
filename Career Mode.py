@@ -19,6 +19,7 @@ done = False
 team = [pygame.font.SysFont('Comic Sans M',  40).render('None', True, White), 'FILLER BECAUSE THE PARAMETER "team" is refered to as a list']
 trophies = 0
 transfer_history = []
+is_market_open = False
 
 #Define functions
 def DisplScrn():
@@ -154,6 +155,7 @@ def UCL():
     out_of_ucl = False
     while not out_of_ucl:
         UCL_buttons(X, Y)
+        transfer_button(X, Y)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -179,6 +181,8 @@ def UCL():
 
                 elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
                     TTS.talk('Simulate all')
+                elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
+                    Pop.popper(900, 0.025)
         clock.tick(FPS)
 
 def ro16(legs, bracket, CurrentStage):
