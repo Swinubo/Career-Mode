@@ -439,7 +439,7 @@ def final(bracket):
     elif c2 == c1:
         TTS.talk("It's a draw!")
     else:
-        TTS.talk('You lost on aggragate!')
+        TTS.talk('You lost!')
             
     scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (0, y))
     pygame.display.flip()
