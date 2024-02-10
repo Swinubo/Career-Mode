@@ -18,6 +18,7 @@ clock, FPS = pygame.time.Clock(), 60
 done = False
 team = [pygame.font.SysFont('Comic Sans M',  40).render('None', True, White), 'FILLER BECAUSE THE PARAMETER "team" is refered to as a list']
 trophies = 0
+transfer_history = []
 
 #Define functions
 def DisplScrn():
@@ -163,12 +164,12 @@ def UCL():
                     TTS.talk('Play')
                 elif ((x < X) and (x > X-300) and (y < Y/2+40) and (y > Y/2)):
                     TTS.talk('Simulate one leg')
-                    match_sim(1, bracket)
+                    ro16(1, bracket)
                 elif ((x < X) and (x > X-300) and (y < Y/2+140) and (y > Y/2+100)):
                     TTS.talk('Simulate both legs')
                     
                     if CurrentStage == '16':
-                        out_of_ucl, CurrentStage, bracket = match_sim(2, bracket, CurrentStage)
+                        out_of_ucl, CurrentStage, bracket = ro16(2, bracket, CurrentStage)
                     elif CurrentStage == '8':
                         out_of_ucl, CurrentStage, bracket = Quarters(2, bracket, CurrentStage)
                     elif CurrentStage == '4':
@@ -180,7 +181,7 @@ def UCL():
                     TTS.talk('Simulate all')
         clock.tick(FPS)
 
-def match_sim(legs, bracket, CurrentStage):
+def ro16(legs, bracket, CurrentStage):
     y = 200
     s1 = 0
     s2 = 0
@@ -451,6 +452,7 @@ def final(bracket, trophies):
     return True, '16', bracket, trophies
 
 team = initSituation()
+transfer_history.append(team)
 age += 1
 #Minigame1() UNCOMMENT THIS AFTER DONE WITH TESTS
 
