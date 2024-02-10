@@ -171,7 +171,7 @@ def UCL():
                     elif CurrentStage == '4':
                         out_of_ucl, CurrentStage, bracket = Semis(2, bracket, CurrentStage)
                     elif CurrentStage == '2':
-                        out_of_ucl, CurrentStage, bracket = final(2, bracket, CurrentStage)
+                        out_of_ucl, CurrentStage, bracket = final(bracket)
 
                 elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
                     TTS.talk('Simulate all')
@@ -249,7 +249,7 @@ def match_sim(legs, bracket, CurrentStage):
         scrn.blit(t[0], (x,y))
         pygame.display.flip()
         x += 90
-        time.sleep(0.1)
+        time.sleep(0.25)
 
     return False, '8', bracket
 
@@ -275,7 +275,7 @@ def sim_all_other_matches(legs, bracket, CurrentStage):
                 bracket[NUM+1] = b[0]
 
             scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (x, y))
-            time.sleep(0.1)
+            time.sleep(0.25)
             y += 100
         scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(aggregate, True, White), (x, 400))
         pygame.display.flip()
@@ -358,7 +358,7 @@ def Quarters(legs, bracket, CurrentStage):
         scrn.blit(t[0], (x,y))
         pygame.display.flip()
         x += 90
-        time.sleep(0.1)
+        time.sleep(0.25)
 
     return False, '4', bracket
 
@@ -419,46 +419,31 @@ def Semis(legs, bracket, CurrentStage):
         scrn.blit(t[0], (x,y))
         pygame.display.flip()
         x += 90
-        time.sleep(0.1)
+        time.sleep(0.25)
 
     return False, '2', bracket
 
-def final(legs, bracket, CurrentStage):
+def final(bracket):
     y = 200
     s1 = 0
     s2 = 0
-    for num in range(legs):
-        c1 = random.randint(0,4)
-        c2 = random.randint(0,4) #PLAYER'S TEAM
-        s1 += c1 #s1 is used to record the two legs while c1 is only used to record one leg
-        s2 += c2
-        fixture = str(c1) + ' - ' + str(c2)
+    c1 = random.randint(0,4)
+    c2 = random.randint(0,4) #PLAYER'S TEAM
+    fixture = str(c1) + ' - ' + str(c2)
 
-        b = bracket[0]    #bracket = all the teams (b1, b2, b3, b4, etc)
+    b = bracket[0]    #bracket = all the teams (b1, b2, b3, b4, etc)
                                 #b = one singular bracket (Ex: b2)
 
-        if c2 > c1:
-            TTS.talk('You won!')
-        elif c2 == c1:
-            TTS.talk("It's a draw!")
-        else:
-            TTS.talk('You lost!')
+    if c2 > c1:
+        TTS.talk('You won the Uefa Champions League!')
+    elif c2 == c1:
+        TTS.talk("It's a draw!")
+    else:
+        TTS.talk('You lost on aggragate!')
             
-        scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (0, y))
-        pygame.display.flip()
-        y += 100
-    
-    if legs == 2:
-        aggregate = 'A: ' + str(s1) + ' - ' + str(s2)
-        scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(aggregate, True, White), (0, 400))
-        if s2 > s1:
-            TTS.talk('You won on aggragate!')
-            TTS.talk('You won the Uefa Champions League!')
-        elif s2 == s1:
-            TTS.talk("It's a draw! Penalties!")
-        else:
-            TTS.talk('You lost on aggragate!')
-    
+    scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (0, y))
+    pygame.display.flip()
+    y += 100
     return True, '16', bracket
 
 team = initSituation()
