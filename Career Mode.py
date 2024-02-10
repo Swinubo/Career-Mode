@@ -17,12 +17,14 @@ age = 9
 clock, FPS = pygame.time.Clock(), 60
 done = False
 team = [pygame.font.SysFont('Comic Sans M',  40).render('None', True, White), 'FILLER BECAUSE THE PARAMETER "team" is refered to as a list']
+trophies = 0
 
 #Define functions
 def DisplScrn():
     scrn.fill(Olive)
     msgbox('Age: ' + str(age), (X-100, 10), 40)
     msgbox('Club:', (X-200, 60), 40)
+    msgbox('Trophies: ' + str(trophies), (X-300, 10), 40)
     scrn.blit(team[0], (X-100, 40))
     pygame.display.flip()
 
@@ -171,7 +173,7 @@ def UCL():
                     elif CurrentStage == '4':
                         out_of_ucl, CurrentStage, bracket = Semis(2, bracket, CurrentStage)
                     elif CurrentStage == '2':
-                        out_of_ucl, CurrentStage, bracket = final(bracket)
+                        out_of_ucl, CurrentStage, bracket, trophies = final(bracket, trophies)
 
                 elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
                     TTS.talk('Simulate all')
@@ -423,7 +425,7 @@ def Semis(legs, bracket, CurrentStage):
 
     return False, '2', bracket
 
-def final(bracket):
+def final(bracket, trophies):
     y = 200
     s1 = 0
     s2 = 0
@@ -436,6 +438,7 @@ def final(bracket):
 
     if c2 > c1:
         TTS.talk('You won the Uefa Champions League!')
+        trophies += 1
     elif c2 == c1:
         TTS.talk("It's a draw!")
     else:
@@ -444,7 +447,7 @@ def final(bracket):
     scrn.blit(pygame.font.SysFont('Comic Sans M',  40).render(fixture, True, White), (0, y))
     pygame.display.flip()
     y += 100
-    return True, '16', bracket
+    return True, '16', bracket, trophies
 
 team = initSituation()
 age += 1
