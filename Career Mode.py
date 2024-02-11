@@ -429,14 +429,9 @@ def Semis(legs, bracket, CurrentStage):
 
 def final(bracket, trophies):
     y = 200
-    s1 = 0
-    s2 = 0
     c1 = random.randint(0,4)
     c2 = random.randint(0,4) #PLAYER'S TEAM
     fixture = str(c1) + ' - ' + str(c2)
-
-    b = bracket[0]    #bracket = all the teams (b1, b2, b3, b4, etc)
-                                #b = one singular bracket (Ex: b2)
 
     if c2 > c1:
         TTS.talk('You won the Uefa Champions League!')
@@ -467,13 +462,26 @@ def transfer_market(transfer_history, market_open, trophies):
                 TTS.talk("Go get some trophies!")
                 on_transfermrkt_tab = False
             elif (trophies == 1) or (trophies == 2):
-                print("rizz")
+                teams = random.choices(tier1, k=2)  #i changed it from t1 to t so all teams can scout instead of lowest rated teams
+                team1 = teams[0]
+                team2 = teams[1]
             elif trophies == 3:
-                print("rizz")
+                teams = random.choices(tier2, k=2)  #i changed it from t1 to t so all teams can scout instead of lowest rated teams
+                team1 = teams[0]
+                team2 = teams[1]
             elif trophies == 4:
-                print("rizz")
+                teams = random.choices(tier3, k=2)  #i changed it from t1 to t so all teams can scout instead of lowest rated teams
+                team1 = teams[0]
+                team2 = teams[1]
             elif trophies > 5:
-                print("rizz")
+                teams = random.choices(tier4, k=2)  #i changed it from t1 to t so all teams can scout instead of lowest rated teams
+                team1 = teams[0]
+                team2 = teams[1]
+
+            POS_ON_X_CHOICE = 200
+            for team in teams:
+                JerseyMaker(team, POS_ON_X_CHOICE, 500)
+                POS_ON_X_CHOICE = 1500
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -481,10 +489,22 @@ def transfer_market(transfer_history, market_open, trophies):
                     quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = event.pos
-
-            
-            
-
+                    if ((x < 280) and (x > 200) and (y < 700) and (y > 500)):
+                        Pop.popper(900, 0.025)
+                        TTS.talk('Selected!')
+                        team = team1
+                        transfer_history.append(team)
+                        on_transfermrkt_tab = True
+                        market_open = False
+                    elif ((x < 1580) and (x > 1500) and (y < 700) and (y > 500)):
+                        Pop.popper(900, 0.025)
+                        TTS.talk('Selected!')
+                        team = team2
+                        transfer_history.append(team)
+                        on_transfermrkt_tab = True
+                        market_open = False
+    return team, transfer_history, market_open
+                    
 team = initSituation()
 transfer_history.append(team)
 age += 1
