@@ -119,7 +119,7 @@ def Minigame1():
         pygame.quit()
         quit()
 
-def UCL():
+def UCL(team, transfer_history, market_open, trophies):
     CurrentStage = '16'
     if age == 16:
         TTS.talk("Since you are now 16, your manager has decided to start you in this seasons' Uefa Champions League!")
@@ -177,8 +177,9 @@ def UCL():
 
                 elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
                     TTS.talk('Simulate all')
-                elif ((x < X) and (x > X-300) and (y < Y/2+240) and (y > Y/2+200)):
+                elif ((x < 850) and (x > 10) and (y < Y-150) and (y > Y-300)):
                     Pop.popper(900, 0.025)
+                    team, transfer_history, market_open = transfer_market(transfer_history, market_open, trophies, team)
         clock.tick(FPS)
 
 def ro16(legs, bracket, CurrentStage):
@@ -446,7 +447,7 @@ def final(bracket, trophies):
     y += 100
     return True, '16', bracket, trophies
 
-def transfer_market(transfer_history, market_open, trophies):
+def transfer_market(transfer_history, market_open, trophies, team):
     if market_open == False:
         TTS.talk('The transfer market is closed for the moment! Please try again at the beginning of the next champions league season!')
     else:
@@ -518,5 +519,5 @@ for num in range(6): #ages up to 16, 10 (current age) + 6 (added age through thi
 
 for num in range (24):
     DisplScrn()
-    UCL()
+    UCL(team, transfer_history, market_open, trophies)
     age += 1
