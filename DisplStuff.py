@@ -27,5 +27,9 @@ def UCL_buttons(X, Y): #this is all good too
     pygame.display.flip()
 
 def transfer_button(X, Y):
-    scrn.blit(pygame.font.SysFont('Comic Sans M',  300).render('Simulate one leg', True, White, Maroon), (X-10, Y-300))
+    scrn.blit(pygame.font.SysFont('Comic Sans M',  150).render('Transfer market', True, White, Maroon), (10, Y-300))
+    pygame.display.flip()
+
+def DisplHits(hits):
+    msgbox('Hits: ' + str(hits), (10, 10), 40)
     pygame.display.flip()

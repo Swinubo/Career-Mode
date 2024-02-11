@@ -19,7 +19,7 @@ done = False
 team = [pygame.font.SysFont('Comic Sans M',  40).render('None', True, White), 'FILLER BECAUSE THE PARAMETER "team" is refered to as a list']
 trophies = 0
 transfer_history = []
-is_market_open = False
+market_open = False
 
 #Define functions
 def DisplScrn():
@@ -85,10 +85,6 @@ def initSituation():
                     done = True
         clock.tick(FPS)
     return team
-
-def DisplHits(hits):
-    msgbox('Hits: ' + str(hits), (10, 10), 40)
-    pygame.display.flip()
 
 def Minigame1():
     TTS.talk('Balls will appear on the screen. Hit as many as you can!')
@@ -454,6 +450,40 @@ def final(bracket, trophies):
     pygame.display.flip()
     y += 100
     return True, '16', bracket, trophies
+
+def transfer_market(transfer_history, market_open, trophies):
+    if market_open == False:
+        TTS.talk('The transfer market is closed for the moment! Please try again at the beginning of the next champions league season!')
+    else:
+        on_transfermrkt_tab = True
+        while on_transfermrkt_tab == True:
+            if trophies == 0:
+                scrn.fill(Olive)
+                centerbox("Nobody wants you lol", (X/2, 100), 100)
+                pygame.display.flip()
+                TTS.talk("Nobody wants you lol")
+                centerbox("Go get some trophies!", (X/2, 100), 100)
+                pygame.display.flip()
+                TTS.talk("Go get some trophies!")
+                on_transfermrkt_tab = False
+            elif (trophies == 1) or (trophies == 2):
+                print("rizz")
+            elif trophies == 3:
+                print("rizz")
+            elif trophies == 4:
+                print("rizz")
+            elif trophies > 5:
+                print("rizz")
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    x, y = event.pos
+
+            
+            
 
 team = initSituation()
 transfer_history.append(team)
