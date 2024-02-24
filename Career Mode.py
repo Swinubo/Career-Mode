@@ -17,12 +17,12 @@ age = 9
 clock, FPS = pygame.time.Clock(), 60
 done = False
 team = [pygame.font.SysFont('Comic Sans M',  40).render('None', True, White), 'FILLER BECAUSE THE PARAMETER "team" is refered to as a list']
-trophies = 0
+trophies = 1
 transfer_history = []
 market_open = False
 
 #Define functions
-def DisplScrn():
+def DisplScrn(team):
     scrn.fill(Olive)
     msgbox('Age: ' + str(age), (X-100, 10), 40)
     msgbox('Club:', (X-200, 60), 40)
@@ -47,8 +47,8 @@ def JerseyMaker(team, x, y):
     scrn.blit(Head, (pos[0], pos[1]-75))
     pygame.display.flip()
 
-def initSituation():
-    DisplScrn()
+def initSituation(team):
+    DisplScrn(team)
     time.sleep(2)
     centerbox("You're playing in the park...", (X/2, 100), 100)
     pygame.display.flip()
@@ -56,7 +56,7 @@ def initSituation():
     centerbox('and you notice a scout watching you.',(X/2, 200), 100)
     pygame.display.flip()
     TTS.talk('and you notice a scout watching you.')
-    DisplScrn()
+    DisplScrn(team)
     centerbox('The scout gives you the option',(X/2, 100), 100)
     centerbox('to join one of two academies.',(X/2, 200), 100)
     pygame.display.flip()
@@ -93,7 +93,7 @@ def Minigame1():
     for num in range(20): #Change the range based on how many balls you want
         xM1 = random.randint(0, X) #xM1 = X for minigame 1
         yM1 = random.randint(0, Y)
-        DisplScrn()
+        DisplScrn(team)
         DisplHits(hits)
         scrn.blit(Ball, (xM1, yM1))
         pygame.display.flip()
@@ -119,7 +119,7 @@ def Minigame1():
         pygame.quit()
         quit()
 
-def UCL(team, transfer_history, market_open, trophies):
+def UCL(team, transfer_history, market_open, trophies, teams):
     CurrentStage = '16'
     if age == 16:
         TTS.talk("Since you are now 16, your manager has decided to start you in this seasons' Uefa Champions League!")
@@ -167,6 +167,7 @@ def UCL(team, transfer_history, market_open, trophies):
                     TTS.talk('Simulate both legs')
                     
                     if CurrentStage == '16':
+                        market_open = False
                         out_of_ucl, CurrentStage, bracket = ro16(2, bracket, CurrentStage)
                     elif CurrentStage == '8':
                         out_of_ucl, CurrentStage, bracket = Quarters(2, bracket, CurrentStage)
@@ -179,8 +180,25 @@ def UCL(team, transfer_history, market_open, trophies):
                     TTS.talk('Simulate all')
                 elif ((x < 850) and (x > 10) and (y < Y-150) and (y > Y-300)):
                     Pop.popper(900, 0.025)
-                    team, transfer_history, market_open = transfer_market(transfer_history, market_open, trophies, team)
+                    team, transfer_history, market_open = transfer_market(transfer_history, market_open, trophies, team, teams)
+                    DisplScrn(team)
+                    b1 = random.sample(t, 1)
+                    b1.append(team)
+
+                    bracket = [b1,b2,b3,b4,b5,b6,b7,b8]
+                    x = 0
+
+                    for b in bracket:
+                        c1 = b[0]
+                        c2 = b[1]
+                        scrn.blit(c1[0], (x, 0))
+                        scrn.blit(c2[0], (x+90, 0))
+                        pygame.display.flip()
+                        x += 180
+                    UCL_buttons(X, Y)
+                    transfer_button(X, Y)                                       
         clock.tick(FPS)
+    return team, transfer_history, market_open, trophies
 
 def ro16(legs, bracket, CurrentStage):
     y = 200
@@ -246,7 +264,7 @@ def ro16(legs, bracket, CurrentStage):
     teams = [t1, t2, t3, t4, t5, t6, t7, t8]
     print("All the teams: " + str(teams))
 
-    DisplScrn()
+    DisplScrn(team)
     UCL_buttons(X, Y)
 
     for t in teams:
@@ -355,7 +373,7 @@ def Quarters(legs, bracket, CurrentStage):
     teams = [t1, t2, t3, t4]
     print("All the teams: " + str(teams))
 
-    DisplScrn()
+    DisplScrn(team)
     UCL_buttons(X, Y)
 
     for t in teams:
@@ -416,7 +434,7 @@ def Semis(legs, bracket, CurrentStage):
     teams = [t1, t2]
     print("All the teams: " + str(teams))
 
-    DisplScrn()
+    DisplScrn(team)
     UCL_buttons(X, Y)
 
     for t in teams:
@@ -447,7 +465,7 @@ def final(bracket, trophies):
     y += 100
     return True, '16', bracket, trophies
 
-def transfer_market(transfer_history, market_open, trophies, team):
+def transfer_market(transfer_history, market_open, trophies, team, teams):
     if market_open == False:
         TTS.talk('The transfer market is closed for the moment! Please try again at the beginning of the next champions league season!')
     else:
@@ -458,7 +476,7 @@ def transfer_market(transfer_history, market_open, trophies, team):
                 centerbox("Nobody wants you lol", (X/2, 100), 100)
                 pygame.display.flip()
                 TTS.talk("Nobody wants you lol")
-                centerbox("Go get some trophies!", (X/2, 100), 100)
+                centerbox("Go get some trophies!", (X/2, 200), 100)
                 pygame.display.flip()
                 TTS.talk("Go get some trophies!")
                 on_transfermrkt_tab = False
@@ -478,46 +496,50 @@ def transfer_market(transfer_history, market_open, trophies, team):
                 teams = random.choices(tier4, k=2)  #i changed it from t1 to t so all teams can scout instead of lowest rated teams
                 team1 = teams[0]
                 team2 = teams[1]
-
-            POS_ON_X_CHOICE = 200
-            for team in teams:
-                JerseyMaker(team, POS_ON_X_CHOICE, 500)
-                POS_ON_X_CHOICE = 1500
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    x, y = event.pos
-                    if ((x < 280) and (x > 200) and (y < 700) and (y > 500)):
-                        Pop.popper(900, 0.025)
-                        TTS.talk('Selected!')
-                        team = team1
-                        transfer_history.append(team)
-                        on_transfermrkt_tab = True
-                        market_open = False
-                    elif ((x < 1580) and (x > 1500) and (y < 700) and (y > 500)):
-                        Pop.popper(900, 0.025)
-                        TTS.talk('Selected!')
-                        team = team2
-                        transfer_history.append(team)
-                        on_transfermrkt_tab = True
-                        market_open = False
+            if on_transfermrkt_tab == True:
+                POS_ON_X_CHOICE = 200
+                for team in teams:
+                    JerseyMaker(team, POS_ON_X_CHOICE, 500)
+                    POS_ON_X_CHOICE = 1500
+                done = False
+                while done == False:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                            quit()
+                        elif event.type == pygame.MOUSEBUTTONDOWN:
+                            x, y = event.pos
+                            if ((x < 280) and (x > 200) and (y < 700) and (y > 500)):
+                                Pop.popper(900, 0.025)
+                                TTS.talk('Selected!')
+                                team = team1
+                                transfer_history.append(team)
+                                on_transfermrkt_tab = False
+                                done = True
+                                market_open = False
+                            elif ((x < 1580) and (x > 1500) and (y < 700) and (y > 500)):
+                                Pop.popper(900, 0.025)
+                                TTS.talk('Selected!')
+                                team = team2
+                                transfer_history.append(team)
+                                on_transfermrkt_tab = False
+                                done = True
+                                market_open = False
     return team, transfer_history, market_open
                     
-team = initSituation()
+team = initSituation(team)
 transfer_history.append(team)
 age += 1
 #Minigame1() UNCOMMENT THIS AFTER DONE WITH TESTS
 
 for num in range(6): #ages up to 16, 10 (current age) + 6 (added age through this for loop) = 16
     age += 1
-    DisplScrn()
+    DisplScrn(team)
     arrow()
     time.sleep(0.75)
 
 for num in range (24):
-    DisplScrn()
-    UCL(team, transfer_history, market_open, trophies)
+    DisplScrn(team)
+    team, transfer_history, market_open, trophies = UCL(team, transfer_history, market_open, trophies, t)
+    market_open = True
     age += 1
