@@ -162,7 +162,7 @@ def UCL(team, transfer_history, market_open, trophies, teams):
                     TTS.talk('Play')
                 elif ((x < X) and (x > X-300) and (y < Y/2+40) and (y > Y/2)):
                     TTS.talk('Simulate one leg')
-                    ro16(1, bracket)
+                    ro16(1, bracket, CurrentStage)
                 elif ((x < X) and (x > X-300) and (y < Y/2+140) and (y > Y/2+100)):
                     TTS.talk('Simulate both legs')
                     
